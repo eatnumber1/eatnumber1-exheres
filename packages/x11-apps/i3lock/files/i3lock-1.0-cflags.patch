@@ -1,0 +1,18 @@
+diff --git a/config.mk b/config.mk
+index 8b2b613..f4713cc 100644
+--- a/config.mk
++++ b/config.mk
+@@ -17,9 +17,9 @@ LIBS = -L${X11LIB} -lX11 -lpam -lXext
+ 
+ # flags
+ CPPFLAGS = -DVERSION=\"${VERSION}\"
+-CFLAGS = -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
+-LDFLAGS = -s ${LIBS}
++CFLAGS := -std=c99 -pedantic -Wall -Os ${INCS} ${CPPFLAGS} ${CFLAGS}
++LDFLAGS := -s ${LIBS} ${LDFLAGS}
+ 
+ # compiler and linker
+-CC = cc
+-INSTALL=install
++CC ?= cc
++INSTALL ?= install

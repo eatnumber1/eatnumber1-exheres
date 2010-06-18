@@ -1,0 +1,33 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v4
+
+SUMMARY="A slightly improved version of slock"
+DESCRIPTION="
+    i3lock improves slock by making it fork() and therefore combinable with
+    commands to suspend your computer. Additionally, instead of turning off your
+    screen via DPMS and/or displaying a black screen, i3lock displays a white
+    screen so you can see if your computer failed to resume from suspend or if
+    your screen is just locked. Also, when entering a wrong password, i3lock
+    does not call XBell(). This is important because i3lock/slock think you’ve
+    entered a password when resuming from suspend, at least sometimes.
+
+    Furthermore, i3lock supports PAM since version 1.0 (that is, LDAP users can
+    use i3lock now, too).
+"
+HOMEPAGE="http://i3.zekjur.net/${PN}/"
+DOWNLOADS="http://i3.zekjur.net/${PN}/${PNV}.tar.gz"
+
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        x11-libs/libX11
+        x11-libs/libXext
+        sys-libs/pam
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PNV}-cflags.patch"
+)
