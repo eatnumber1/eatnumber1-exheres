@@ -1,0 +1,23 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://github.com/lloyd/yajl.git"
+require cmake [ cmake_minimum_version="2.6" ] scm-git
+
+SUMMARY="Small event-driven (SAX-style) JSON parser"
+HOMEPAGE="http://lloyd.github.com/yajl"
+DOWNLOADS=""
+DESCRIPTION="
+    Yet Another JSON Library. YAJL is a small event-driven (SAX-style)
+    JSON parser written in ANSI C, and a small validating JSON generator.
+"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="doc"
+
+DEPENDENCIES="
+    build:
+        doc? ( app-doc/doxygen )
+"
