@@ -1,0 +1,36 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Based on work by Alexander Færøy <ahf@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PNV="${PN}-3.e-bf1"
+
+SUMMARY="An improved dynamic tiling window manager"
+HOMEPAGE="http://i3.zekjur.net/"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+DOWNLOADS="http://i3.zekjur.net/downloads/${MY_PNV}.tar.bz2"
+WORK="${WORKBASE}/${MY_PNV}"
+
+DEPENDENCIES="
+    build+run:
+        x11-utils/xcb-util[>=0.3.3]
+        x11-libs/libxcb[>=1.1.93]
+        x11-libs/libX11
+        dev-libs/libev
+        dev-libs/yajl
+    build:
+        app-doc/asciidoc[>=8.3.0]
+        x11-proto/xcb-proto[>=1.3]
+        sys-devel/flex
+        sys-devel/bison
+    recommendation:
+        x11-misc/dmenu
+        x11-apps/i3lock
+        x11-apps/i3status
+    suggestion:
+        x11-apps/xmessage [[
+            description = [ only needed for welcome message ]
+        ]]
+"
