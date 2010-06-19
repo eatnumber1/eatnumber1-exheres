@@ -1,0 +1,25 @@
+diff --git a/Makefile.am b/Makefile.am
+index c449169..f2a7f69 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -8,7 +8,6 @@ SUBDIRS =        \
+ 	libneon  \
+ 	lib      \
+ 	preload  \
+-	avfscoda \
+ 	include  \
+ 	test     \
+ 	scripts  \
+diff --git a/configure.in b/configure.in
+index c8ae8dd..5d6b4b9 100644
+--- a/configure.in
++++ b/configure.in
+@@ -534,8 +534,6 @@ zlib/Makefile
+ bzlib/Makefile
+ lib/Makefile
+ include/Makefile
+-avfscoda/Makefile
+-avfscoda/redir/Makefile
+ preload/Makefile
+ libneon/Makefile
+ extfs/Makefile

@@ -1,0 +1,33 @@
+diff --git a/configure.in b/configure.in
+index c8ae8dd..2a7b02e 100644
+--- a/configure.in
++++ b/configure.in
+@@ -500,7 +500,7 @@ if test "$ac_cv_use_xz" = "yes"; then
+ fi
+ 
+ 
+-AM_CONDITIONAL(USE_LZMA, test x$use_lzma = xyes)
++AM_CONDITIONAL(USE_LZMA, test x$use_liblzma = xyes)
+ AM_CONDITIONAL(INSTALL_FUSE, test x$install_fuse = xyes)
+ AM_CONDITIONAL(INSTALL_AVFSCODA_PROFILE, test x$install_profilescripts = xyes)
+ AM_CONDITIONAL(INSTALL_AVFSCODA, test x$install_avfscoda = xyes)
+diff --git a/src/xzread.c b/src/xzread.c
+index bbc1906..4ef65b7 100644
+--- a/src/xzread.c
++++ b/src/xzread.c
+@@ -343,7 +343,6 @@ struct xzfile *av_xzfile_new(vfile *vf)
+ 
+ static void xzcache_destroy(struct xzcache *zc)
+ {
+-    av_free(zc->indexes);
+ }
+ 
+ struct xzcache *av_xzcache_new()
+@@ -352,7 +351,6 @@ struct xzcache *av_xzcache_new()
+ 
+     AV_NEW_OBJ(zc, xzcache_destroy);
+     zc->numindex = 0;
+-    zc->indexes = NULL;
+     zc->size = -1;
+ 
+     AV_LOCK(xzread_lock);

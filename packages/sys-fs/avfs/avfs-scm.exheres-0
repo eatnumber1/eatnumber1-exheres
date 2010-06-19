@@ -1,0 +1,41 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v4
+
+SCM_REPOSITORY="git://avf.git.sourceforge.net/gitroot/avf/avf"
+require scm-git autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.4 1.5 1.6 1.7 1.8 1.9 1.10 1.11 ] ]
+
+SUMMARY="AVFS is a virtual filesystem that allows browsing of compressed files."
+DESCRIPTION="
+    AVFS is a system, which enables all programs to look inside gzip, tar, zip,
+    etc. files or view remote (ftp, http, dav, etc.) files, without recompiling
+    the programs.
+"
+HOMEPAGE="http://avf.sourceforge.net/"
+
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS="debug fuse"
+
+DEPENDENCIES="
+    build+run:
+        fuse? ( sys-fs/fuse )
+        sys-libs/zlib
+        app-arch/bzip2
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/${PNV}-no-avfscoda.patch"
+    "${FILES}/${PNV}-xz.patch"
+)
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-preload
+    --disable-avfscoda
+    --enable-library
+    --with-system-zlib
+    --with-system-bzlib
+)
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug fuse )
+
+AT_M4DIR=( macros )
