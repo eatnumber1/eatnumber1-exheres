@@ -1,0 +1,44 @@
+# Copyright (c) 2008 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ suffix=tar.gz ]
+
+SUMMARY="A GTK-based image browser"
+DESCRIPTION="
+    GQview is an image viewer for Unix operating systems (developed on Linux).
+    It's key features include single click file viewing, external editor
+    support, thumbnail preview, and zoom features. Some image management
+    features are also included.
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+LANGS="
+    ar be bg ca cs da de eo es et eu fi fr hu id it ja ko nl no pl pt_BR ro
+    ru sk sl sv th tr uk vi zh_CN.GB2312 zh_TW
+"
+MYOPTIONS="
+    lcms [[ description = [ Adds support for color profiles ] ]]
+    linguas: ${LANGS}
+"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+        sys-devel/gettext
+    build+run:
+        x11-libs/gtk+[>=2.4.0]
+        lcms? ( media-libs/lcms )
+"
+DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( lcms )
+
+src_configure() {
+    local langs lang
+    for lang in $LANGS; do
+        option "linguas:$lang" && langs+=( "$lang" )
+    done
+    export LINGUAS="${langs[@]}"
+    default
+}
