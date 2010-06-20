@@ -1,0 +1,80 @@
+# Copyright (c) 2010 Russell Harmon
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'genkernel-3.4.10.907.exheres-0' from codejunky, which is:
+#     Copyright 2009 Jan Meier
+# Based in part upon 'genkernel-3.4.10-r2.ebuild' from Gentoo, which is:
+#     Copyright 1999-2007 Gentoo Foundation
+
+SUMMARY="Gentoo automatic kernel building scripts"
+HOMEPAGE="http://www.gentoo.org/"
+LICENCES="GPL-2"
+PLATFORMS="~amd64 ~x86"
+SLOT="0"
+
+VERSION_BUSYBOX='1.7.4'
+VERSION_DMAP='1.02.28'
+VERSION_DMRAID='1.0.0.rc16'
+VERSION_E2FSPROGS='1.41.10'
+VERSION_FUSE='2.7.4'
+VERSION_LVM='2.02.61'
+VERSION_ISCSI='2.0-871'
+VERSION_UNIONFS_FUSE='0.22'
+
+RH_HOME="ftp://sources.redhat.com/pub"
+DM_HOME="http://people.redhat.com/~heinzm/sw/dmraid/src"
+BB_HOME="http://www.busybox.net/downloads"
+IS_HOME="http://www.open-iscsi.org/bits"
+
+DOWNLOADS="mirror://gentoo/${PNV}.tar.bz2
+    ${DM_HOME}/dmraid-${VERSION_DMRAID}.tar.bz2
+    ${DM_HOME}/old/dmraid-${VERSION_DMRAID}.tar.bz2
+    ${RH_HOME}/lvm2/LVM2.${VERSION_LVM}.tgz
+    ${RH_HOME}/lvm2/old/LVM2.${VERSION_LVM}.tgz
+    ${RH_HOME}/dm/device-mapper.${VERSION_DMAP}.tgz
+    ${RH_HOME}/dm/old/device-mapper.${VERSION_DMAP}.tgz
+    ${BB_HOME}/busybox-${VERSION_BUSYBOX}.tar.bz2
+    ${IS_HOME}/open-iscsi-${VERSION_ISCSI}.tar.gz
+    mirror://sourceforge/e2fsprogs/e2fsprogs-${VERSION_E2FSPROGS}.tar.gz
+    mirror://sourceforge/fuse/fuse-${VERSION_FUSE}.tar.gz
+    http://podgorny.cz/unionfs-fuse/releases/unionfs-fuse-${VERSION_UNIONFS_FUSE}.tar.bz2
+"
+
+src_install() {
+    edo sed -i -e "s:VERSION_DMAP:$VERSION_DMAP:" \
+        -e "s:VERSION_DMRAID:$VERSION_DMRAID:" \
+        -e "s:VERSION_E2FSPROGS:$VERSION_E2FSPROGS:" \
+        -e "s:VERSION_FUSE:$VERSION_FUSE:" \
+        -e "s:VERSION_LVM:$VERSION_LVM:" \
+        -e "s:VERSION_BUSYBOX:$VERSION_BUSYBOX:" \
+        -e "s:VERSION_ISCSI:$VERSION_ISCSI:" \
+        -e "s:VERSION_UNIONFS_FUSE:$VERSION_UNIONFS_FUSE:" \
+        genkernel.conf
+    insinto /etc
+    doins genkernel.conf
+
+    doman genkernel.8 
+    emagicdocs
+    dobin genkernel
+
+    edo rm -f genkernel genkernel.8 AUTHORS ChangeLog README TODO genkernel.conf 
+
+    insinto /usr/share/genkernel
+    doins -r "${WORK}"/* 
+    mkdir -p "${IMAGE}"/var/cache/genkernel/src
+    edo cp -f \
+        "${FETCHEDDIR}"/dmraid-${VERSION_DMRAID}.tar.bz2 \
+        "${FETCHEDDIR}"/LVM2.${VERSION_LVM}.tgz \
+        "${FETCHEDDIR}"/device-mapper.${VERSION_DMAP}.tgz \
+        "${FETCHEDDIR}"/e2fsprogs-${VERSION_E2FSPROGS}.tar.gz \
+        "${FETCHEDDIR}"/busybox-${VERSION_BUSYBOX}.tar.bz2 \
+        "${FETCHEDDIR}"/open-iscsi-${VERSION_ISCSI}.tar.gz \
+        "${FETCHEDDIR}"/fuse-${VERSION_FUSE}.tar.gz \
+        "${FETCHEDDIR}"/unionfs-fuse-${VERSION_UNIONFS_FUSE}.tar.bz2 \
+        "${IMAGE}"/var/cache/genkernel/src
+}
+
+src_prepare() {
+    # e2fsprogs ./configure no longer accepts --with-ldopts
+    edo sed -i -e 's:./configure  --with-ldopts=-static:LDFLAGS="-static" ./configure:g' gen_compile.sh
+}
+
