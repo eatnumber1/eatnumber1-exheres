@@ -1,0 +1,10 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require vim-plugin [ vim_version=7.0 script_id=231 src_id=12546 src_suffix=vim script_type=plugin ]
+
+SUMMARY="Use tabs for indent, spaces for alignment"
+
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+
