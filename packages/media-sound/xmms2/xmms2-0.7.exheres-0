@@ -1,0 +1,123 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v4
+
+MY_PV="${PV}DrNo"
+
+require sourceforge [ pv="${MY_PV}" ] waf
+
+SUMMARY="XMMS is a multimedia player for unix systems."
+DESCRIPTION="
+    The X Multimedia System (XMMS) is a free software audio player very similar to Winamp, that runs
+    on many Unix-like operating systems.
+"
+HOMEPAGE="http://www.xmms2.org"
+
+LICENCES="LGPL-2.1 GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+WORK="${WORKBASE}/${PN}-${MY_PV}"
+
+XMMS_PLUGINS=( 
+    airplay alsa ao apefile asf asx avcodec cdda cue curl daap diskwrite equalizer faad file flac
+    flv gvfs html ices icymetaint id3v2 karaoke m3u mac mad mms modplug mp4 mpg123 musepack
+    normalize null nulstripper ofa oss pls pulse replaygain rss samba speex tta vocoder vorbis
+    vorbis_common wave wavpack xml xspf
+)
+MYOPTIONS="
+    python [[ description = [ For Pythn bindings. ] ]]
+    ruby [[ description = [ For Ruby bindings. ] ]]
+    perl [[ description = [ For Perl bindings. ] ]]
+    boost [[ description = [ For C++ bindings. ] ]]
+    daemon [[ description = [ Build the xmms2d daemon. ] ]]
+    et [[ description = [ Enable phone-home client. ] ]]
+    ecore [[ description = [ Enable the e17 ecore client. ] ]]
+    avahi
+
+    ( ${XMMS_PLUGINS[*]} ) [[ requires = daemon ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/glib[>=2.8]
+        dev-db/sqlite[>=3.2.4]
+
+        avahi? ( net-dns/avahi )
+        perl? ( dev-lang/perl[>=5.7.3] )
+        python? ( dev-python/Pyrex )
+        ruby? ( dev-lang/ruby[>=1.8] )
+        boost? ( dev-libs/boost )
+        ecore? ( x11-libs/ecore )
+        
+        alsa? ( sys-sound/alsa-lib )
+        ao? ( media-libs/libao )
+        avcodec? ( media/ffmpeg )
+        cdda? (
+            dev-libs/libcdio
+            media-libs/libdiscid
+        )
+        curl? ( net-misc/curl[>=7.11.2] )
+        daap? ( net-dns/avahi )
+        faad? ( media-libs/faad2 )
+        flac? ( media-libs/flac )
+        ices? (
+            media-libs/libshout
+            media-libs/libogg
+            media-libs/libvorbis
+        )
+        mac? ( media-libs/mac-port )
+        mad? ( media-libs/libmad )
+        mms? ( media-libs/libmms )
+        modplug? ( media-libs/libmodplug )
+        mpg123? ( media-sound/mpg123 )
+        musepack? ( media-libs/libmpcdec )
+        ofa? ( media-libs/libofa )
+        pulse? ( media-sound/pulseaudio )
+        rss? ( dev-libs/libxml2 )
+        samba? ( net-fs/samba )
+        speex? (
+            media-libs/speex
+            media-libs/libogg
+        )
+        vocoder? (
+            sci-libs/fftw
+            media-libs/libsamplerate
+        )
+        vorbis? ( media-libs/libvorbis )
+        wavpack? ( media-sound/wavpack )
+        xspf? ( dev-libs/libxml2 )
+"
+#        
+#    test:
+#        dev-util/cunit
+#        dev-util/valgrind
+#        media-libs/SDL
+#        media-libs/libvorbis
+#        media-libs/libvisual
+
+src_configure() {
+    local i
+
+    local plugins
+    if option daemon; then
+        for i in "${XMMS_PLUGINS[@]}"; do
+            option $i || plugins+=",$i"
+        done
+        WAF_SRC_CONFIGURE_PARAMS+=( "--with-plugins=${plugins:1}" )
+    else
+        WAF_SRC_CONFIGURE_PARAMS+=( --with-xmms2d )
+    fi
+
+    local optionals="xmmsclient++-glib,nycli,launcher,medialib-updater"
+    option avahi && optionals+=",avahi"
+    option et && optionals+=",et"
+    option ruby && optionals+=",ruby"
+    option boost && optionals+=",xmmsclient++"
+    option ecore && optionals+=",xmmsclient-ecore"
+#    if option build_options:optional_tests; then
+#        WAF_SRC_CONFIGURE_PARAMS+=( --run-tests )
+#        optionals+=",tests,vistest"
+#    fi
+    WAF_SRC_CONFIGURE_PARAMS+=( "--with-optionals=$optionals" )
+
+    waf_src_configure
+}
