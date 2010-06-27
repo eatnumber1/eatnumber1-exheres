@@ -8,7 +8,7 @@
 SUMMARY="Gentoo automatic kernel building scripts"
 HOMEPAGE="http://www.gentoo.org/"
 LICENCES="GPL-2"
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
 SLOT="0"
 
 VERSION_BUSYBOX='1.7.4'

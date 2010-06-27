@@ -10,7 +10,7 @@ HOMEPAGE="http://gotmor.googlepages.com/dzen"
 
 LICENCES="MIT"
 SLOT="0"
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
 MYOPTIONS="xinerama xpm"
 
 DEPENDENCIES="

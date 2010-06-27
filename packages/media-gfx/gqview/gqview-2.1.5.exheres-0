@@ -13,7 +13,7 @@ DESCRIPTION="
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
 LANGS="
     ar be bg ca cs da de eo es et eu fi fr hu id it ja ko nl no pl pt_BR ro
     ru sk sl sv th tr uk vi zh_CN.GB2312 zh_TW

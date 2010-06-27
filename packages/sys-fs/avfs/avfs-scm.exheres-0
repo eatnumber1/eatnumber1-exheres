@@ -13,7 +13,7 @@ DESCRIPTION="
 HOMEPAGE="http://avf.sourceforge.net/"
 
 SLOT="0"
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
 MYOPTIONS="debug fuse"
 
 DEPENDENCIES="

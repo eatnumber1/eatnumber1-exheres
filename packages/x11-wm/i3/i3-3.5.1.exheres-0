@@ -9,7 +9,7 @@ HOMEPAGE="http://i3.zekjur.net/"
 
 LICENCES="BSD"
 SLOT="0"
-PLATFORMS="~amd64 ~x86"
+PLATFORMS="~amd64"
 DOWNLOADS="http://i3.zekjur.net/downloads/${MY_PNV}.tar.bz2"
 WORK="${WORKBASE}/${MY_PNV}"
 
