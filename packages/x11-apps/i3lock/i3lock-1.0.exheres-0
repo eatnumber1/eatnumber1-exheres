@@ -19,7 +19,6 @@ DOWNLOADS="http://i3.zekjur.net/${PN}/${PNV}.tar.gz"
 
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
