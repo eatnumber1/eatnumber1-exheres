@@ -1,0 +1,7 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require minbif [[ attachment="50" ]]
+
+PLATFORMS="~amd64"
+

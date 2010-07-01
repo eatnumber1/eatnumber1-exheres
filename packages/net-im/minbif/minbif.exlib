@@ -1,0 +1,60 @@
+# Copyright (c) 2010 Russell Harmon <russ@eatnumber1.com>
+# Distributed under the terms of the GNU General Public License v2
+
+require cmake [[ cmake_minimum_version="2.6" ]]
+
+SUMMARY="Minbif aims to use the libpurple library from the Pidgin project to provide an IRC-friendly
+instant messaging client."
+DESCRIPTION="
+    By leveraging libpurple (which is already behind many popular clients), Minbif is guaranteed to
+    alway provide an up-to-date support of a large number of IM networks (and it supports plugins!).
+    Minbif also maps everything to pure IRC commands: joining a conversation is a simple /join,
+    banning an user is a real IRC ban, sending files by a simple DCC, etc.
+"
+HOMEPAGE="http://minbif.im/"
+
+if ever at_least scm; then
+    SCM_REPOSITORY="git://git.symlink.me/pub/romain/minbif.git"
+    require scm-git
+else
+    myexparam attachment
+    DOWNLOADS="${HOMEPAGE}/attachments/download/$(exparam attachment)/${PNV}.tar.gz"
+fi
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="
+    video [[ description = [ Enable the video viewer ] ]]
+    caca [[ description = [ Use libcaca features to display icons ] ]]
+    imlib [[ description = [ Use imlib library ] ]]
+    pam [[ description = [ Enable PAM support ] ]]
+    tls
+    debug
+    plugin [[ description = [ Enable plugin build ] ]]
+    
+    video [[ requires = [ caca ] ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        net-im/pidgin[>=2.4]
+        dev-libs/glib:2
+        video? (
+            net-im/farsight2[>=0.0.9]
+            net-im/pidgin[>=2.6.1][gstreamer]
+            media-libs/gstreamer[>=0.10.10]
+        )
+        imlib? ( media-libs/imlib2[>=1.0] )
+        caca? ( media-libs/libcaca[>=0.99_beta17] )
+        plugin? ( dev-libs/libxml2[>=2.5] )
+        tls? ( dev-libs/gnutls )
+        pam? ( sys-libs/pam )
+"
+
+CMAKE_SRC_CONFIGURE_PARAMS=(
+    -DENABLE_MINBIF:BOOL=TRUE
+    -DCONF_PREFIX:PATH="/etc/minbif"
+    -DDOC_PREFIX:PATH="/usr/share/doc/${PNV}"
+)
+CMAKE_SRC_CONFIGURE_OPTION_ENABLES=( PLUGIN PAM IMLIB CACA VIDEO TLS )
+
