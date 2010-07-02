@@ -25,3 +25,6 @@ DEPENDENCIES="
         dev-libs/openssl
         dev-libs/rlog
 "
+
+BUGS_TO="russ@eatnumber1.com"
+

@@ -20,6 +20,8 @@ DEPENDENCIES="
         xpm? ( x11-libs/libXpm )
 "
 
+BUGS_TO="russ@eatnumber1.com"
+
 option_define() {
     if optionq ${1} ; then
         echo -DDZEN_${1^^}

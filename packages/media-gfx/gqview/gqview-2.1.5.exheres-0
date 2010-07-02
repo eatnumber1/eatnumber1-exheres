@@ -31,6 +31,9 @@ DEPENDENCIES="
         x11-libs/gtk+[>=2.4.0]
         lcms? ( media-libs/lcms )
 "
+
+BUGS_TO="russ@eatnumber1.com"
+
 DEFAULT_SRC_CONFIGURE_PARAMS=( --hates=docdir )
 DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( lcms )
 

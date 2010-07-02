@@ -25,3 +25,6 @@ DEPENDENCIES="
     recommendation:
         x11-misc/dzen2
 "
+
+BUGS_TO="russ@eatnumber1.com"
+

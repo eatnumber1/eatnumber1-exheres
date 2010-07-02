@@ -27,6 +27,8 @@ DEPENDENCIES="
         sys-libs/pam
 "
 
+BUGS_TO="russ@eatnumber1.com"
+
 DEFAULT_SRC_PREPARE_PATCHES=(
     "${FILES}/${PNV}-cflags.patch"
 )

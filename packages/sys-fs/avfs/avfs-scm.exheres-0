@@ -36,6 +36,9 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-system-bzlib
 )
 
+BUGS_TO="russ@eatnumber1.com"
+
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( debug fuse )
 
 AT_M4DIR=( macros )
+

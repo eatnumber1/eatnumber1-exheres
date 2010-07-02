@@ -94,6 +94,8 @@ DEPENDENCIES="
 #        media-libs/libvorbis
 #        media-libs/libvisual
 
+BUGS_TO="russ@eatnumber1.com"
+
 src_configure() {
     local i
 

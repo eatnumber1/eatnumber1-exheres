@@ -21,3 +21,6 @@ DEPENDENCIES="
     build:
         doc? ( app-doc/doxygen )
 "
+
+BUGS_TO="russ@eatnumber1.com"
+

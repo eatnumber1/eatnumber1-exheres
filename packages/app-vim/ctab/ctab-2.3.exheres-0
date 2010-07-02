@@ -8,3 +8,5 @@ SUMMARY="Use tabs for indent, spaces for alignment"
 SLOT="0"
 PLATFORMS="~amd64"
 
+BUGS_TO="russ@eatnumber1.com"
+
